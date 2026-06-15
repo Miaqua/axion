@@ -89,12 +89,6 @@ class Task(models.Model):
 
     deadline = models.DateField()
 
-    assigned_to = models.ForeignKey(
-        User,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
 
     project = models.ForeignKey(
         Project,
