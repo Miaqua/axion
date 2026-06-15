@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center align-items-center">
+
+    <div class="col-md-5">
+
+        <div class="card shadow-lg border-0 rounded-4">
+
+            <div class="card-body p-5">
+
+                <h2 class="text-center mb-4">
+                    Авторизация
+                </h2>
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    <input
+                        type="text"
+                        name="username"
+                        class="form-control mb-3"
+                        placeholder="Логин"
+                        required
+                    >
+
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control mb-3"
+                        placeholder="Пароль"
+                        required
+                    >
+
+                    <button class="btn btn-dark w-100">
+                        Войти
+                    </button>
+
+                </form>
+
+                <p class="text-danger mt-3">
+                    {{ error }}
+                </p>
+
+                <div class="text-center mt-3">
+
+                    <a href="/register/">
+                        Регистрация
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

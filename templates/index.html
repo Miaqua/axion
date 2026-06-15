@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card p-5 mb-5">
+
+    <div class="row align-items-center">
+
+        <div class="col-md-8">
+
+            <h1 class="display-5 fw-bold mb-3">
+
+                Информационная система планирования
+                и учёта проектов
+
+            </h1>
+
+            <p class="fs-5 text-secondary">
+
+                Единая платформа для управления задачами
+                и проектами IT-команды
+                АО «Ижевский мотозавод «Аксион-холдинг».
+
+            </p>
+
+            <div class="mt-4 d-flex gap-3">
+
+                <a
+                    href="https://dk-axion.ru/"
+                    class="btn btn-primary btn-lg"
+                    target="_blank"
+                >
+                    Афиша ДК «Аксион»
+                </a>
+
+                <a
+                    href="https://www.axion.ru/"
+                    class="btn btn-outline-primary btn-lg"
+                    target="_blank"
+                >
+                    Официальный сайт
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 text-center">
+
+            <div class="display-1 fw-bold text-primary">
+                AXION
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<h1 class="mb-4 fw-bold">
+    Панель управления
+</h1>
+
+<div class="row g-4">
+    <div class="col-md-3">
+        <div class="card p-4 text-center h-100">
+            <h5>
+                Проекты
+            </h5>
+            <h1 class="display-5 fw-bold text-primary">
+                {{ projects_count }}
+            </h1>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-4 text-center h-100">
+            <h5>
+                Задачи
+            </h5>
+            <h1 class="display-5 fw-bold text-primary">
+                {{ tasks_count }}
+            </h1>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-4 text-center h-100">
+            <h5>
+                В работе
+            </h5>
+            <h1 class="display-5 fw-bold text-warning">
+                {{ in_progress_tasks }}
+            </h1>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-4 text-center h-100">
+            <h5>
+                Завершено
+            </h5>
+            <h1 class="display-5 fw-bold text-success">
+                {{ completed_tasks }}
+            </h1>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+    <div class="card text-white bg-danger">
+        <div class="card-body">
+            <h5 class="card-title">Просроченные задачи</h5>
+            <p class="card-text display-4">{{ overdue_tasks }}</p>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="row mt-5 g-4">
+    <div class="col-md-6">
+        <a href="/projects/" class="btn btn-primary w-100 py-3 fs-5">
+            Перейти к проектам
+        </a>
+    </div>
+    <div class="col-md-6">
+        <a href="/tasks/" class="btn btn-success w-100 py-3 fs-5">
+            Просмотр задач
+        </a>
+    </div>
+</div>
+
+{% endblock %}

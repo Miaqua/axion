@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow p-5">
+
+    <h2>
+        Личный кабинет
+    </h2>
+
+    <hr>
+
+    <p>
+        <strong>Логин:</strong>
+        {{ user.username }}
+    </p>
+
+    <p>
+        <strong>Роль:</strong>
+
+        {% if user.is_superuser %}
+            Администратор
+        {% else %}
+            {{ profile.get_role_display }}
+        {% endif %}
+    </p>
+
+</div>
+
+<div class="card shadow p-5 mt-4 border-danger">
+
+    <h3 class="mb-4 text-danger">
+         Просроченные задачи
+    </h3>
+
+    {% if overdue_tasks %}
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-danger">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Категория</th>
+                        <th>Статус</th>
+                        <th>Дедлайн</th>
+                        <th>Проект</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in overdue_tasks %}
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.category }}</td>
+                        <td>
+                            <span class="badge bg-dark">
+                                {{ task.status }}
+                            </span>
+                        </td>
+                        <td class="text-danger fw-bold">{{ task.deadline|date:"d.m.Y" }}</td>
+                        <td>
+                            <a href="/project/{{ task.project.id }}/" class="text-decoration-none">
+                                {{ task.project.title }}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-success">
+             Отлично! У вас нет просроченных задач.
+        </div>
+
+    {% endif %}
+
+</div>
+
+<div class="card shadow p-5 mt-4">
+
+    <h3 class="mb-4">
+        Активные задачи
+    </h3>
+
+    {% if active_tasks %}
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Категория</th>
+                        <th>Статус</th>
+                        <th>Дедлайн</th>
+                        <th>Управление</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in active_tasks %}
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.category }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if task.status == 'В работе' %}bg-primary
+                                {% else %}bg-secondary{% endif %}">
+                                {{ task.status }}
+                            </span>
+                        </td>
+                        <td>{{ task.deadline|date:"d.m.Y" }}</td>
+                        <td>
+                            <div class="d-flex gap-2 justify-content-center">
+                                <a
+                                    href="/task/status/{{ task.id }}/Завершена/"
+                                    class="btn btn-success btn-sm d-flex justify-content-center align-items-center"
+                                    style="min-width: 90px;"
+                                >
+                                    Завершить
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-info">
+            У вас нет активных задач.
+        </div>
+
+    {% endif %}
+
+</div>
+
+<div class="card shadow p-5 mt-4">
+
+    <h3 class="mb-4">
+        Завершенные задачи
+    </h3>
+
+    {% if completed_tasks %}
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Категория</th>
+                        <th>Статус</th>
+                        <th>Дедлайн</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in completed_tasks %}
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.category }}</td>
+                        <td>
+                            <span class="badge bg-success">
+                                {{ task.status }}
+                            </span>
+                        </td>
+                        <td>{{ task.deadline|date:"d.m.Y" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-success">
+            У вас пока нет завершенных задач. Продолжайте в том же духе!
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

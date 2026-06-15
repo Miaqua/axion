@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow p-4">
+
+    <h2 class="mb-4">
+        Задачи
+    </h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Категория</th>
+                    <th>Сложность</th>
+                    <th>Статус</th>
+                    <th>Исполнитель</th>
+                    <th>Проект</th>
+                    <th>Дедлайн</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr {% if task.status == 'Просрочена' %}class="table-danger"{% endif %}>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.category }}</td>
+                    <td>
+                        <span class="badge 
+                            {% if task.priority == 'Высокая' %}bg-danger
+                            {% elif task.priority == 'Средняя' %}bg-warning
+                            {% else %}bg-info{% endif %}">
+                            {{ task.priority }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge 
+                            {% if task.status == 'Завершена' %}bg-success
+                            {% elif task.status == 'В работе' %}bg-primary
+                            {% elif task.status == 'Просрочена' %}bg-dark
+                            {% else %}bg-secondary{% endif %}">
+                            {{ task.status }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if task.assigned_to %}
+                            {{ task.assigned_to.username }}
+                        {% else %}
+                            Не назначен
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="/project/{{ task.project.id }}/" class="text-decoration-none">
+                            {{ task.project.title }}
+                        </a>
+                    </td>
+                    <td {% if task.is_overdue %}class="text-danger fw-bold"{% endif %}>
+                        {{ task.deadline|date:"d.m.Y" }}
+                        {% if task.is_overdue %}
+                            <span class="badge bg-danger">Просрочен</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if task.status == 'Завершена' %}
+                            <span class="badge bg-success">Завершена</span>
+                        {% elif task.status == 'Просрочена' %}
+                            <span class="badge bg-dark">Просрочена</span>
+                        {% elif task.status == 'В работе' %}
+                            <span class="badge bg-warning text-dark">В работе</span>
+                        {% else %}
+                            <a href="/task/accept/{{ task.id }}/" class="btn btn-success btn-sm d-flex justify-content-center align-items-center" style="min-width: 90px;">
+                                Принять
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
